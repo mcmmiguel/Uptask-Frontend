@@ -11,7 +11,7 @@ export const EditProjectView = () => {
     const { data, isLoading, isError } = useQuery({
         queryKey: ['editProject', projectId],
         queryFn: () => getProjectById(projectId),
-        retry: false,
+        retry: false
     });
 
     if (isLoading) return 'Cargando...';
