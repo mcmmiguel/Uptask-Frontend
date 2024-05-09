@@ -23,7 +23,4 @@ export const EditTaskData = () => {
 
     if (data) return <EditTaskModal data={data} taskId={taskId} />
 
-    return (
-        <div>EditTaskData</div>
-    )
 }
