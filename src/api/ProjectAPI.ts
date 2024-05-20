@@ -14,8 +14,14 @@ export async function createProject(formData: ProjectFormData) {
 }
 
 export async function getProjects() {
+    const token = localStorage.getItem('AUTH_TOKEN');
     try {
-        const { data } = await api('/projects');
+        const { data } = await api('/projects', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        );
         const response = DashboardProjectSchema.safeParse(data);
 
         if (response.success) {
