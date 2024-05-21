@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { deleteProject, getProjects } from "@/api/ProjectAPI";
 import { toast } from 'react-toastify'
 import { useAuth } from '@/hooks/useAuth'
+import { isManager } from '@/utils/policies'
 
 export const DashboardView = () => {
 
@@ -88,7 +89,7 @@ export const DashboardView = () => {
                                                 </Link>
                                             </Menu.Item>
 
-                                            {project.manager === user._id && (
+                                            {isManager(project.manager, user._id) && (
                                                 <>
                                                     <Menu.Item>
                                                         <Link to={`/projects/${project._id}/edit`}
