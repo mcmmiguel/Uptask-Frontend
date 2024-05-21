@@ -1,10 +1,11 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
-import { useQuery } from "@tanstack/react-query";
-import { getProjectTeam } from "@/api/TeamAPI";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getProjectTeam, removeUserFromProject } from "@/api/TeamAPI";
 import AddMemberModal from "@/components/team/AddMemberModal";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 export const ProjectTeamView = () => {
 
@@ -18,9 +19,19 @@ export const ProjectTeamView = () => {
         retry: false,
     });
 
+    const { mutate } = useMutation({
+        mutationFn: removeUserFromProject,
+        onError: (error) => {
+            console.log(error.message);
+            toast.error(error.message);
+        },
+        onSuccess: (data) => {
+            toast.success(data);
+        }
+    });
+
     if (isLoading) return 'Cargando...';
     if (isError) return <Navigate to={'/404'} />
-
 
     if (data) return (
         <>
@@ -79,6 +90,7 @@ export const ProjectTeamView = () => {
                                                 <button
                                                     type='button'
                                                     className='block px-3 py-1 text-sm leading-6 text-red-500'
+                                                    onClick={() => mutate({ projectId, userId: member._id })}
                                                 >
                                                     Eliminar del Proyecto
                                                 </button>
