@@ -9,9 +9,10 @@ import { toast } from 'react-toastify';
 
 type TaskCardProps = {
     task: Task;
+    canEdit: boolean;
 }
 
-export const TaskCard = ({ task }: TaskCardProps) => {
+export const TaskCard = ({ task, canEdit }: TaskCardProps) => {
 
     const navigate = useNavigate();
     const params = useParams();
@@ -36,6 +37,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
                 <button
                     type="button"
                     className="text-xl font-bold text-slate-600 text-left"
+                    onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
                 >
                     {task.name}
                 </button>
@@ -63,25 +65,29 @@ export const TaskCard = ({ task }: TaskCardProps) => {
                                     Ver Tarea
                                 </button>
                             </Menu.Item>
-                            <Menu.Item>
-                                <button
-                                    onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
-                                    type='button'
-                                    className='block px-3 py-1 text-sm leading-6 text-gray-900'
-                                >
-                                    Editar Tarea
-                                </button>
-                            </Menu.Item>
+                            {canEdit &&
+                                <>
+                                    <Menu.Item>
+                                        <button
+                                            onClick={() => navigate(location.pathname + `?editTask=${task._id}`)}
+                                            type='button'
+                                            className='block px-3 py-1 text-sm leading-6 text-gray-900'
+                                        >
+                                            Editar Tarea
+                                        </button>
+                                    </Menu.Item>
 
-                            <Menu.Item>
-                                <button
-                                    type='button'
-                                    className='block px-3 py-1 text-sm leading-6 text-red-500'
-                                    onClick={() => mutate({ projectId, taskId: task._id })}
-                                >
-                                    Eliminar Tarea
-                                </button>
-                            </Menu.Item>
+                                    <Menu.Item>
+                                        <button
+                                            type='button'
+                                            className='block px-3 py-1 text-sm leading-6 text-red-500'
+                                            onClick={() => mutate({ projectId, taskId: task._id })}
+                                        >
+                                            Eliminar Tarea
+                                        </button>
+                                    </Menu.Item>
+                                </>
+                            }
                         </Menu.Items>
                     </Transition>
                 </Menu>
