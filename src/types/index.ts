@@ -31,6 +31,7 @@ const noteSchema = z.object({
     content: z.string(),
     createdBy: userSchema,
     task: z.string(),
+    createdAt: z.string(),
 });
 
 export type Note = z.infer<typeof noteSchema>;
@@ -49,6 +50,9 @@ export const TaskSchema = z.object({
     project: z.string(),
     description: z.string(),
     status: TaskStatusSchema,
+    notes: z.array(noteSchema.extend({
+        createdBy: userSchema,
+    })),
     completedBy: z.array(z.object({
         _id: z.string(),
         user: userSchema,
