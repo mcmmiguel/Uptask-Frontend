@@ -13,7 +13,7 @@ import { ForgotPasswordView } from "@/views/auth/ForgotPasswordView";
 import { NewPasswordView } from "@/views/auth/NewPasswordView";
 import { ProjectTeamView } from "@/views/projects/ProjectTeamView";
 import { ProfileView } from "./views/profile/ProfileView";
-import { ChangePasswordView } from "./views/profile/ChangePasswordView";
+import ChangePasswordView from "./views/profile/ChangePasswordView";
 import { ProfileLayout } from "./layouts/ProfileLayout";
 
 export default function Router() {
