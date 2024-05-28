@@ -44,7 +44,7 @@ export type NoteFormData = Pick<Note, 'content'>;
 export type ConfirmToken = Pick<Auth, 'token'>;
 
 // Tasks
-export const TaskStatusSchema = z.enum(["pending", "hold", "inProgress", "underReview", "completed"]);
+export const TaskStatusSchema = z.enum(["pending", "onHold", "inProgress", "underReview", "completed"]);
 
 export type TaskStatus = z.infer<typeof TaskStatusSchema>;
 
@@ -88,6 +88,12 @@ export const DashboardProjectSchema = z.array(
         manager: true,
     })
 );
+
+export const editProjectSchema = ProjectSchema.pick({
+    projectName: true,
+    clientName: true,
+    description: true,
+});
 
 export type Project = z.infer<typeof ProjectSchema>;
 export type ProjectFormData = Pick<Project, 'clientName' | 'projectName' | 'description'>;
